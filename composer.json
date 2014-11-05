@@ -1,0 +1,22 @@
+{
+    "name": "mrjking/CSSCleaner",
+    "description": "Cleans up CSS",
+    "homepage": "https://github.com/mrjking/csscleaner",
+    "require": {
+        "php": "~5.4"
+    },
+    "require-dev": {
+        "mockery/mockery": "~0.9",
+        "phpunit/phpunit": "4.2.2 as 3.7"
+    },
+    "autoload": {
+        "psr-4": {
+            "mrjking\\CSSTools\\": [
+                "src/",
+                "test/"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
