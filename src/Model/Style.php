@@ -5,15 +5,18 @@ namespace mrjking\CSSTools\model;
 
 class Style
 {
-    public $factor;
+    public $score;
     public $rules = [];
+    public $md5;
 
-    function __construct($rules, $factor = 0)
+    function __construct($rules, $score = 0)
     {
         foreach ($rules as $property => $value) {
             $this->rules[$property]= new Rule($property, $value);
         }
-        $this->factor = $factor;
+        ksort($this->rules);
+        $this->md5 = md5($this->getString());
+        $this->score = $score;
     }
 
     public function containAllRules($rules)
@@ -40,11 +43,20 @@ class Style
         return count($this->rules);
     }
 
+    public function getString()
+    {
+        $rules = [];
+        foreach ($this->rules as $rule) {
+            $rules []= $rule->getString();
+        }
+        return join(';', $rules);
+    }
+
     public function getRulesArray()
     {
         $rules = [];
-        foreach ($this->rules as $property => $ruleObj) {
-            $rules[$property] = $ruleObj->value;
+        foreach ($this->rules as $property => $rule) {
+            $rules[$property] = $rule->value;
         }
         return $rules;
     }

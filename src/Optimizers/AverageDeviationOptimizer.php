@@ -5,9 +5,7 @@ namespace mrjking\CSSTools\Optimizers;
 
 class AverageDeviationOptimizer extends Optimizer
 {
-
-
-    public function calculateStyleMostNormalizedStyles()
+    public function calculate()
     {
         foreach ($this->styles as $style) {
             //First calculate mean for all rules in this style
@@ -26,12 +24,12 @@ class AverageDeviationOptimizer extends Optimizer
                 $total += $deviation;
             }
             $meanDeviation = $total / $style->ruleCount();
-            $style->factor = $meanDeviation;
+            $style->score = 100 - $meanDeviation;
         }
 
-        //Sort from lowest to highest (lower is better)
+        //Sort from highest to lowest (higher is better)
         uasort($this->styles, function($a, $b) {
-            return $b->factor < $a->factor;
+            return $b->score < $a->score;
         });
     }
 }
